@@ -1,0 +1,31 @@
+{
+  "name": "blog_api",
+  "description": "",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "doc": "jsdoc -c jsdoc.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Arthur-Ferreira/"
+  },
+  "keywords": [
+    "Node.js",
+    "Express",
+    "MySQL"
+  ],
+  "author": "Arthur Ferreira arthurfdarosa@gmail.coms",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "express": "^4.17.1",
+    "mysql2": "^3.3.3"
+  },
+  "devDependencies": {
+    "jsdoc": "^4.0.2",
+    "nodemon": "^2.0.7"
+  }
+}
