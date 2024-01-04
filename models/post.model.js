@@ -107,8 +107,8 @@ class Post {
       // Execute the query and update instance property.
       const values = [this.title, this.summary, this.body, this.author];
 
-      const result = await db.query(query, values);
-      this.id = result.insertId;
+      const newPost = await db.query(query, values);
+      return newPost
     } catch (error) {
       throw new Error(`Error saving post: ${error.message}`);
     }

@@ -5,14 +5,14 @@ const Post = require('../models/post.model');
  * @param {Object} req - Express request object.
  * @param {Object} res - Express response object.
  */
-async function getAllPosts(req, res) {
+async function getAllPosts(req, res, next) {
+  let posts;
   try {
-    const posts = await Post.fetchAllPosts();
-    res.render('posts-list', { posts });
+    posts = await Post.fetchAllPosts();
   } catch (error) {
-    console.error(error);
-    res.status(500).render('500', { error: 'Internal Server Error' });
+    return next(error);
   }
+  res.json({ posts: posts });
 }
 
 /**
@@ -48,7 +48,7 @@ async function getSinglePost(req, res) {
       }),
     };
 
-    res.render('post-detail', { post: postData });
+    res.json({ post: postData });
   } catch (error) {
     console.error(error);
     res.status(500).render('500', { error: 'Internal Server Error' });
@@ -63,7 +63,7 @@ async function getSinglePost(req, res) {
 async function renderNewPostForm(req, res) {
   try {
     const authors = await Post.fetchAllAuthors();
-    res.render('create-post', { authors: authors });
+    res.json({ authors: authors });
   } catch (error) {
     console.error(error);
     res.status(500).render('500', { error: 'Internal Server Error' });
@@ -75,7 +75,7 @@ async function renderNewPostForm(req, res) {
  * @param {Object} req - Express request object.
  * @param {Object} res - Express response object.
  */
-async function createNewPost(req, res) {
+async function createNewPost(req, res, next) {
   const data = {
     title: req.body.title,
     summary: req.body.summary,
@@ -84,13 +84,14 @@ async function createNewPost(req, res) {
   };
 
   const post = new Post(data.title, data.summary, data.body, data.author);
+
   try {
     await post.save();
-    res.redirect('/posts');
   } catch (error) {
-    console.error(error);
-    res.status(500).render('500', { error: 'Internal Server Error' });
+    return next(error);
   }
+
+  res.json({ message: 'Added Post successfully!', createdPost: post });
 }
 
 /**
