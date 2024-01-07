@@ -12,7 +12,7 @@ router.get('/posts', postController.getAllPosts);
 
 router.post('/posts', postController.createNewPost);
 
-router.get('/new-post', postController.renderNewPostForm);
+router.get('/authors', postController.renderNewPostForm);
 
 router.get('/posts/:id', postController.getSinglePost);
 
