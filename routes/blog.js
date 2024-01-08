@@ -18,9 +18,9 @@ router.get('/posts/:id', postController.getSinglePost);
 
 router.get('/posts/:id/edit', postController.renderUpdatePostForm);
 
-router.post('/posts/:id/edit', postController.updatePost);
+router.patch('/posts/:id/edit', postController.updatePost);
 
-router.post('/posts/:id/delete', postController.deletePost);
+router.delete('/posts/:id/delete', postController.deletePost);
 
 
 module.exports = router

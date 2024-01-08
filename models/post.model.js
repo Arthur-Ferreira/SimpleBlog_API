@@ -109,6 +109,7 @@ class Post {
 
       const newPost = await db.query(query, values);
       return newPost;
+
     } catch (error) {
       throw new Error(`Error saving post: ${error.message}`);
     }

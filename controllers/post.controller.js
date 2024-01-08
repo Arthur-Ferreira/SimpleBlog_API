@@ -151,6 +151,7 @@ async function updatePost(req, res) {
     const post = new Post(data.title, data.summary, data.body, data.author, data.id);
 
     await post.update();
+    res.status(200).json({ message: 'Updated Post successfully!', updatePost: post });
   } catch (error) {
     console.error(error);
     res.status(500).render('500', { error: 'Internal Server Error' });
