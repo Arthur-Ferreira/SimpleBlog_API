@@ -4,10 +4,6 @@ const router = express.Router();
 const postController = require('../controllers/post.controller');
 
 
-router.get('/', (req, res) => {
-  res.send('Hello World');
-});
-
 router.get('/posts', postController.getAllPosts);
 
 router.post('/posts', postController.createNewPost);

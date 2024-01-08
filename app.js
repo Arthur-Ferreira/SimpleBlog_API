@@ -17,6 +17,10 @@ app.use((req, res, next) => {
   next();
 });
 
+app.get('/', (req, res) => {
+  res.send('Hello World');
+});
+
 app.use('/api', blogRoutes); // Routes beeing used on the app
 
 app.use(function (error, req, res, next) {
