@@ -36,7 +36,12 @@ async function getSinglePost(req, res) {
 
     const postData = {
       title: result[0].title,
-      author_name: result[0].author_name,
+      author:
+      {
+        author_id: result[0].author_id,
+        name: result[0].author_name,
+        email: result[0].author_email
+      },
       summary: result[0].summary,
       body: result[0].body,
       date: result[0].date.toISOString(),
@@ -46,6 +51,7 @@ async function getSinglePost(req, res) {
         month: 'long',
         day: 'numeric',
       }),
+
     };
 
     res.json({ post: postData });
@@ -87,11 +93,10 @@ async function createNewPost(req, res, next) {
 
   try {
     await post.save();
+    res.status(201).json({ message: 'Added Post successfully!', createdPost: post });
   } catch (error) {
     return next(error);
   }
-
-  res.json({ message: 'Added Post successfully!', createdPost: post });
 }
 
 /**
@@ -116,7 +121,7 @@ async function renderUpdatePostForm(req, res) {
 
     const postData = result[0];
 
-    res.render('update-post', { post: postData });
+    res.json({ post: postData });
   } catch (error) {
     console.error(error);
     res.status(500).render('500', { error: 'Internal Server Error' });
@@ -146,7 +151,6 @@ async function updatePost(req, res) {
     const post = new Post(data.title, data.summary, data.body, data.author, data.id);
 
     await post.update();
-    res.redirect('/posts');
   } catch (error) {
     console.error(error);
     res.status(500).render('500', { error: 'Internal Server Error' });
@@ -167,8 +171,6 @@ async function deletePost(req, res) {
 
     const post = new Post(null, null, null, null, postId);
     await post.delete();
-
-    res.redirect('/posts');
   } catch (error) {
     console.error(error);
     res.status(500).render('500', { error: 'Internal Server Error' });

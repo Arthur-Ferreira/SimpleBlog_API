@@ -1,6 +1,6 @@
 require('dotenv').config()
 
-const path = require('path');
+const bodyParser = require('body-parser');
 const express = require('express');
 
 const blogRoutes = require('./routes/blog');
@@ -9,7 +9,8 @@ const port = process.env.PORT;
 
 const app = express();
 
-app.use(express.json());
+
+app.use(bodyParser.json());
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -24,7 +25,9 @@ app.use(function (error, req, res, next) {
   // Default error handling function
   // Will become active whenever any route / middleware crashes
   console.log(error);
-  res.status(500);
+  const status = error.status || 500;
+  const message = error.message || 'Something went wrong.';
+  res.status(status).json({ message: message });
 });
 
 app.listen(port, () => {

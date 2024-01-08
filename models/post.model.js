@@ -108,7 +108,7 @@ class Post {
       const values = [this.title, this.summary, this.body, this.author];
 
       const newPost = await db.query(query, values);
-      return newPost
+      return newPost;
     } catch (error) {
       throw new Error(`Error saving post: ${error.message}`);
     }
