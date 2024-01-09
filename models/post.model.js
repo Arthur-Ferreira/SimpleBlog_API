@@ -83,7 +83,7 @@ class Post {
       const query = `SELECT * FROM authors`;
 
       // Execute the query.
-      const [authors,] = await db.query(query);
+      const { rows: authors } = await db.query(query);
       return authors;
     } catch (error) {
       throw new Error(`Error fetching all authors: ${error.message}`);
