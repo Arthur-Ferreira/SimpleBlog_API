@@ -56,11 +56,10 @@ class Post {
       const query = `
         SELECT posts.*, authors.name AS author_name, authors.email AS author_email FROM posts
         INNER JOIN authors ON posts.author_id = authors.id
-        WHERE posts.post_id = ?
+        WHERE posts.post_id = $1
       `;
 
-      // Execute the query and update instance properties.
-      const [post] = await db.query(query, [this.id]);
+      const { rows: post } = await db.query(query, [this.id]);
 
       if (post.length > 0) {
         this.title = post[0].title;
