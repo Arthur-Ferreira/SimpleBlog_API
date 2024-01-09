@@ -99,16 +99,14 @@ class Post {
   async save() {
     try {
       const query = `
-      INSERT INTO posts (title, summary, body, author_id) 
-      VALUES (?, ?, ?, ?)
+        INSERT INTO posts (title, summary, body, author_id) 
+        VALUES ($1, $2, $3, $4)
       `;
 
-      // Execute the query and update instance property.
       const values = [this.title, this.summary, this.body, this.author];
 
       const newPost = await db.query(query, values);
       return newPost;
-
     } catch (error) {
       throw new Error(`Error saving post: ${error.message}`);
     }
@@ -157,10 +155,13 @@ class Post {
         throw new Error('Undefined Post ID');
       }
 
-      // Execute the query.
-      const query = `DELETE FROM posts WHERE post_id = ?`;
+      const query = `DELETE FROM posts WHERE post_id = $1`;
 
-      const [result] = await db.query(query, [this.id]);
+      const { rowCount } = await db.query(query, [this.id]);
+
+      if (rowCount === 0) {
+        throw new Error('Post not found or not deleted');
+      }
     } catch (error) {
       throw new Error(`Error deleting post: ${error.message}`);
     }
