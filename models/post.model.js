@@ -125,19 +125,15 @@ class Post {
       }
 
       const query = `
-      UPDATE posts SET title = ?, summary = ?, body = ?
-      WHERE post_id = ?
+        UPDATE posts SET title = $1, summary = $2, body = $3
+        WHERE post_id = $4
       `;
 
-      // Execute the query and check if the update was successful.
-      const [result] = await db.query(query, [this.title, this.summary, this.body, this.id]);
+      const { rowCount } = await db.query(query, [this.title, this.summary, this.body, this.id]);
 
-
-      // Check if the update was a success or if any line was affected.
-      if (result.affectedRows === 0) {
+      if (rowCount === 0) {
         throw new Error('Post not found or not updated');
       }
-
     } catch (error) {
       throw new Error(`Error updating post: ${error.message}`);
     }
