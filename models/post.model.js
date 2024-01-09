@@ -35,7 +35,7 @@ class Post {
       `;
 
       // Execute the query
-      const [posts,] = await db.query(query);
+      const { rows: posts } = await db.query(query);
       return posts;
     } catch (error) {
       throw new Error(`Error fetching all posts: ${error.message}`);
