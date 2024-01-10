@@ -15,7 +15,8 @@ app.use(cors());
 // Parser to application/json
 app.use(express.json());
 
-app.use('/api', blogRoutes); // Routes beeing used on the app
+// Routes beeing used on the app
+app.use('/api', blogRoutes); 
 
 app.use(function (error, req, res, next) {
   // Default error handling function
