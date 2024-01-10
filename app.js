@@ -9,16 +9,10 @@ const port = process.env.PORT;
 
 const app = express();
 
+// Enable all request
+app.use(cors());
 
 app.use(bodyParser.json());
-
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Credentials', true);
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PATCH,DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'X-CSRF-Token, X-Request-Width, Content-Type');
-  next();
-});
 
 app.use('/api', blogRoutes); // Routes beeing used on the app
 
