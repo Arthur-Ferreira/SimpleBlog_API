@@ -1,7 +1,5 @@
 require('dotenv').config();
 
-const bodyParser = require('body-parser');
-
 const express = require('express');
 const cors = require("cors");
 
@@ -14,7 +12,8 @@ const app = express();
 // Enable all request
 app.use(cors());
 
-app.use(bodyParser.json());
+// Parser to application/json
+app.use(express.json());
 
 app.use('/api', blogRoutes); // Routes beeing used on the app
 
