@@ -134,30 +134,32 @@ class Post {
       if (rowCount === 0) {
         throw new Error('Post not found or not updated');
       }
+      return rowCount;
     } catch (error) {
       throw new Error(`Error updating post: ${error.message}`);
     }
   }
-
-
+  
+  
   /**
    * Deletes a post from the database.
    * @returns {Promise<void>} - A promise indicating the success of the operation.
    * @throws {Error} - Throws an error if there is an issue with the database query.
   */
-  async delete() {
+ async delete() {
     try {
       if (!this.id) {
         throw new Error('Undefined Post ID');
       }
-
+      
       const query = `DELETE FROM posts WHERE post_id = $1`;
-
+      
       const { rowCount } = await db.query(query, [this.id]);
-
+      
       if (rowCount === 0) {
         throw new Error('Post not found or not deleted');
       }
+      return rowCount;
     } catch (error) {
       throw new Error(`Error deleting post: ${error.message}`);
     }
